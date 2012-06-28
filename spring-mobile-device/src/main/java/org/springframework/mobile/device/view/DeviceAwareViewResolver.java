@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.mobile.device.web.servlet.view;
+package org.springframework.mobile.device.view;
 
 import java.util.Locale;
 
@@ -93,11 +93,8 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 
 	/**
 	 * Returns the device aware view name for the given device prefix and view name.
-	 * 
 	 * @param prefix the path prefix for the device requesting the view
-	 * 
 	 * @param viewName the name of the view before device resolution
-	 * 
 	 * @return the device aware view name for the given device prefix and view name
 	 */
 	protected String buildDeviceViewName(final String prefix, final String viewName) {
@@ -116,7 +113,6 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	/**
 	 * This implementation returns only the device aware view name, 
 	 * as this view resolver doesn't support localized resolution.
-	 * 
 	 * @see org.springframework.web.servlet.view.UrlBasedViewResolver#getCacheKey(java.lang.String, java.util.Locale)
 	 * @see #resolveDeviceAwareViewName(String)
 	 */
@@ -127,24 +123,22 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 
 	/**
 	 * Returns the given prefix without a leading or trailing slash.
-	 * 
 	 * @param prefix the prefix to normalize
-	 * 
 	 * @return the given <code>prefix</code> without a trailing slash
 	 */
 	private String normalizePrefix(final String prefix) {
 
 		String normalizedPrefix = prefix;
-		
+
 		if (prefix == null) {
 			return null;
 		}
-		
-		if(normalizedPrefix.startsWith("/")) {
+
+		if (normalizedPrefix.startsWith("/")) {
 			normalizedPrefix = prefix.substring(1);
 		}
 
-		if (normalizedPrefix.endsWith("/") ) {
+		if (normalizedPrefix.endsWith("/")) {
 			normalizedPrefix = normalizedPrefix.substring(0, normalizedPrefix.length() - 1);
 		}
 
@@ -158,7 +152,6 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	 * If a redirect URL or forward URL is detected, 
 	 * {@link org.springframework.web.servlet.view.UrlBasedViewResolver#createView(java.lang.String, java.util.Locale)}
 	 * is called instead.
-	 * 
 	 * @see org.springframework.web.servlet.view.UrlBasedViewResolver#createView(java.lang.String, java.util.Locale)
 	 */
 	@Override
@@ -179,7 +172,6 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 		return this.createDeviceAwareView(viewName, locale);
 	}
 
-
 	/**
 	 * Creates the device aware view object.
 	 * 
@@ -190,9 +182,7 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	 * 
 	 * @param viewName the name of the view to retrieve
 	 * @param locale the <code>Locale</code> to retrieve the view for
-	 * 
 	 * @return the <code>View</code> instance, or <code>null</code> if not found
-	 * 
 	 * @throws Exception if the view couldn't be resolved
 	 */
 	protected View createDeviceAwareView(final String viewName, final Locale locale) throws Exception {
@@ -204,9 +194,7 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	 * Resolves the device and site preference from the current request
 	 * context and then delegates to 
 	 * {@link #resolveDeviceAwareViewName(String, Device, SitePreference)}.
-	 * 
 	 * @param viewName the view name to resolve
-	 * 
 	 * @return the device aware view name for the given <code>viewName</code>
 	 */
 	protected String resolveDeviceAwareViewName(final String viewName) {
@@ -221,25 +209,18 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 	/**
 	 * Returns the device aware view name for the given view name, given device
 	 * and given site preference.
-	 * 
 	 * @param viewName the view name to resolve (required)
-	 * 
 	 * @param device the <code>Device</code> for the current request (required)
-	 * 
 	 * @param sitePreference the <code>SitePreference</code> for the 
 	 * current request or null if no site preference was specified
-	 * 
 	 * @return the device aware view name for the given <code>viewName</code>, 
 	 * <code>device</code> and <code>sitePreference</code>
-	 * 
 	 */
-	protected String resolveDeviceAwareViewName(
-			final String viewName,
-			final Device device,
+	protected String resolveDeviceAwareViewName(final String viewName, final Device device,
 			final SitePreference sitePreference) {
 
 		String deviceAwareViewName;
-		
+
 		if (device.isMobile() && (sitePreference == null || sitePreference.isMobile())) {
 			deviceAwareViewName = this.buildDeviceViewName(mobilePrefix, viewName);
 		} else {
@@ -247,8 +228,7 @@ public class DeviceAwareViewResolver extends UrlBasedViewResolver implements Vie
 		}
 
 		if (logger.isDebugEnabled()) {
-			logger.debug(String.format(
-					"Resolved view with name [%s] for device [%s] preference [%s]%n", 
+			logger.debug(String.format("Resolved view with name [%s] for device [%s] preference [%s]%n",
 					deviceAwareViewName, device, sitePreference));
 		}
 
